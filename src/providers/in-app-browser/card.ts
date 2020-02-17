@@ -159,11 +159,11 @@ export class IABCardProvider {
          *
          * */
         case 'pairingOnly':
-          const subscription: Subscription = this.user$.subscribe(user => {
+          const pairingSubscription: Subscription = this.user$.subscribe(user => {
             if (Object.entries(user).length === 0) {
               return;
             }
-
+            this.getCards();
             this.cardIAB_Ref.hide();
 
             this.cardIAB_Ref.executeScript(
@@ -178,15 +178,18 @@ export class IABCardProvider {
             const infoSheet = this.actionSheetProvider.createInfoSheet(
               'in-app-notification',
               {
-                title: 'BitPay ID',
-                body: this.translate.instant('BitPay ID successfully paired.')
+                title: 'Account Connected',
+                body: this.translate.instant('Account successfully connected.')
               }
             );
             infoSheet.present();
-            subscription.unsubscribe();
+            if (pairingSubscription){
+              pairingSubscription.unsubscribe();
+            }
           });
 
           break;
+
 
         /*
          *

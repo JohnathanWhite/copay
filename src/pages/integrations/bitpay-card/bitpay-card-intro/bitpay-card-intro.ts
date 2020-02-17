@@ -141,8 +141,10 @@ export class BitPayCardIntroPage {
 
   private startPairBitPayAccount() {
     this.navCtrl.popToRoot({ animate: false }); // Back to Root
-    let url = 'https://bitpay.com/visa/dashboard/add-to-bitpay-wallet-confirm';
-    this.externalLinkProvider.open(url);
+    this.iab.sendMessageToIAB(this.iab.refs.card, { message: 'pairingOnly' });
+    this.iab.refs.card.show();
+    // let url = 'https://bitpay.com/visa/dashboard/add-to-bitpay-wallet-confirm';
+    // this.externalLinkProvider.open(url);
   }
 
   private showAccountSelector() {
